@@ -23,6 +23,28 @@ Comando utilizado: (wordpress-net es el nombre de la red).
 ```bash
 sudo docker network create wordpress-net
 ```
+Luego cree un volumen para almacenar los datos del contenedor y asegurar la persistencia de los datos.
+Comando utilizado:
+```bash
+sudo docker volume create mysql-data
+```
+Para comenzar a descargar MySQL descargue la respectiva imagen.
+Comando utilizado:
+```bash
+sudo docker pull mysql:8.0
+```
+Comence a correr el contenedor:
+```bash
+sudo docker run -d --name mysql_container  --network wordpress-net -e MYSQL_ROOT_PASSWORD=manu -e MYSQL_DATABASE=mi_base -e MYSQL_USER=manu -e MYSQL_PASSWORD=manu -v mysql-data:/var/lib/mysql -p 3306:3306 mysql:8.0
+```
+Use las variables de entorno necesarias para su funcionamiento:
+name:nombre del contenedor.
+network: red para poder conectar luego wordpress y MySQL más rápidamente.
+-e: variables de entrono.
+-v: volumen donde va a almacenar los datos y los cambios realizados.
+
+## Despliegue de Wordpress:
+
 
 
 
