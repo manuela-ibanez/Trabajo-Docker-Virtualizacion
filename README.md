@@ -247,16 +247,16 @@ COPY php.ini /usr/local/etc/php/php.ini
 mkdir wp-custom
 ```
 > [!NOTE]  
-> Dentro de esa carpeta:
-> Se Intento de dos formas diferentes y ninguna dejaba descomprimir luego el plugin,  
-> comandos intentados:
+> Dentro de esa carpeta:  
+> Se Intento descargar la imagen de dos formas diferentes y ninguna dejaba descomprimir luego el plugin.    
+> Comandos intentados:
 ```yaml
 wget https://downloads.wordpress.org/plugin/wordfence.latest-stable.zip
 curl -L -o wordfence.zip https://downloads.wordpress.org/plugin/wordfence.latest-stable.zip
 ```
 > [!TIP]
-> Se optó por descargarlo manualmente desde el navegador.
-> Luego de descargar el archivo, quedó en la carpeta de descargas, descomprimido en otra carpeta wp-custom1.
+> Se optó por descargarlo manualmente desde el navegador.  
+> Luego de descargar el archivo, quedó en la carpeta de descargas, se descomprió en otra carpeta wp-custom1.  
 > Comando utilizado:
 
 ![Image](https://github.com/user-attachments/assets/10567afd-794b-434f-85e0-bca46a4f5c22)  
@@ -280,11 +280,11 @@ docker build -t wordpress-wordfence
 ![Image](https://github.com/user-attachments/assets/ede7b277-fe73-403e-9797-9dca58e1dc53)  
 
 > [!TIP]
-> En la siguiente imagen se ve que el plugin Wordfence Security puede activarse, ya aparece dentro de los plugins:
+> En la siguiente imagen se ve que el plugin Wordfence Security puede activarse, dentro de los plugins:
 
 ![Image](https://github.com/user-attachments/assets/bb9ba8a2-f6fd-41c8-b6d1-38bd61cdd7fd)  
 > [!TIP]
-> Y en la siguiente imagen se ve el plugin ya activado:
+> En esta imagen se ve el plugin ya activado:
 
 ![Image](https://github.com/user-attachments/assets/68755476-f2d7-40ad-9558-fde7b52386a3)  
 
