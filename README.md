@@ -195,7 +195,7 @@ docker rm wordpress_container
 
 ### Posible error al configurar: 
 > [!CAUTION]
-> Al subir un archivo en el que el tamaño máximo es de 2MB,  
+> Al verficar aparecia que el tamaño máximo es de 2MB,  
 > por lo tanto algo falló en la configuraciones del wordpress.  
 > Lo primero ha realizar fue verificar que la imagen se haya creado correctamente y que el contenedor haya levantado con wordpress-custom.  
 ![Image](https://github.com/user-attachments/assets/42657d70-25b1-486d-991f-b0cbf1f89406)
