@@ -80,19 +80,19 @@ Docker stop mysql_container
 Docker rm mysql_container
 ```
 Y para volver a correrlos:  
-![Image](https://github.com/user-attachments/assets/0f95d22f-18f7-4e6b-858d-21c3487d70e7)
-![Image](https://github.com/user-attachments/assets/23dbd0e9-09b9-40b5-bdd7-2a0510453be2)
+![Image](https://github.com/user-attachments/assets/0f95d22f-18f7-4e6b-858d-21c3487d70e7)  
+![Image](https://github.com/user-attachments/assets/23dbd0e9-09b9-40b5-bdd7-2a0510453be2)  
 Luego de la corrección de errores en ambos codigos comenzó a andar correctamente la pagina web.
 En la siguiente imagen se muestra como se veia la pagina ni bien inició luego de solucionar los errores:
-![Image](https://github.com/user-attachments/assets/8eff947b-e35d-429c-af78-4e84b4ee47ed)
+![Image](https://github.com/user-attachments/assets/8eff947b-e35d-429c-af78-4e84b4ee47ed)  
 
 Para comprobar persistencia se realiza un cambio en la página de inicio con las opciones a la derecha, en entradas. 
-Cambio realizado: se cambió ¡Hola mundo! por ¡Trabajo docker manu!.
-Se reinician los contenedores para comprobar que ese cambio se guarde correctamente:
-![Image](https://github.com/user-attachments/assets/0b7d3dd3-450c-41cd-b099-f020c8893663)
+Cambio realizado: se cambió ¡Hola mundo! por ¡Trabajo docker manu!.  
+Se reinician los contenedores para comprobar que ese cambio se guarde correctamente:  
+![Image](https://github.com/user-attachments/assets/0b7d3dd3-450c-41cd-b099-f020c8893663)  
 Al volver a entrar en la pagina se ve la persistencia de los datos modificados, lo que indica la correcta configuración de los volumenes.
-En la siguiente foto se puede ver el cambio realizado:
-![Image](https://github.com/user-attachments/assets/cb5328a7-0d97-4074-987e-4a545d9ca405)
+En la siguiente foto se puede ver el cambio realizado:  
+![Image](https://github.com/user-attachments/assets/cb5328a7-0d97-4074-987e-4a545d9ca405)  
 
 
 
