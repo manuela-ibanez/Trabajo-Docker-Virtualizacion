@@ -79,7 +79,7 @@ Docker rm wordpress_container
 Docker stop mysql_container
 Docker rm mysql_container
 ```
-Y para volver a correrlos:
+Y para volver a correrlos:  
 ![Image](https://github.com/user-attachments/assets/0f95d22f-18f7-4e6b-858d-21c3487d70e7)
 ![Image](https://github.com/user-attachments/assets/23dbd0e9-09b9-40b5-bdd7-2a0510453be2)
 Luego de la corrección de errores en ambos codigos comenzó a andar correctamente la pagina web.
