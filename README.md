@@ -203,8 +203,8 @@ docker rm wordpress_container
 > [!CAUTION]
 > Luego se reinició el contenedor.  
 > El tamaño sigue siendo el mismo,
-> El error se basaba en que el archivo con la configuración upload.ini que no fue copiado correctamente,  
-> no se encuentra en el contenedor.
+> El error se basaba en que el archivo con la configuración upload.ini no fue copiado correctamente,  
+> no se encuentraba en el contenedor.
 
 ![Image](https://github.com/user-attachments/assets/c395f1cf-52e4-4a8f-ad27-9c710ef4a243)  
 > [!CAUTION]
