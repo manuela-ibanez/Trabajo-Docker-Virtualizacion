@@ -71,9 +71,12 @@ sudo docker volume create wp-content
 docker pull wordpress:latest.
 ```
 >[!tip]
-> Este paso no es estrictamente necesario, ya que, cuando se ejecuta el comando sudo docker run, Docker busca la imagen localmente y si no la encuentra la descarga automaticamente antes de correrlo, sin embargo queria incluirlo >
+> Este paso no es estrictamente necesario, ya que, cuando se ejecuta el comando sudo docker run,
+> Docker busca la imagen localmente y si no la encuentra la descarga automaticamente antes de correrlo, sin embargo queria incluirlo
 > igualmente en la practica para tenerlo en cuenta.
-> Comenzar a correr el contenedor:
+
+>[!NOTE]
+>Comenzar a correr el contenedor:
 ```yaml
 docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manuela -e WORDPRESS_DB_PASSWORD=contraseña -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
