@@ -190,66 +190,98 @@ docker rm wordpress_container
 ![Image](https://github.com/user-attachments/assets/4b75ec73-dada-4f30-a4b8-d3738b4cc80e)  
 > Se usa la imagen personalizada anteriormente en vez de wordpress:latest, como se ve en la imagen.
 
-Ocurrió un error en lo anterior:  
-Al subir un archivo me dice que el tamaño máximo es de 2MB, por lo tanto algo falló en la configuraciones del wordpress.  
-Lo primero que realice fue verificar que la imagen se haya creado correctamente y que el contenedor haya levantado con wordpress-custom.  
-![Image](https://github.com/user-attachments/assets/42657d70-25b1-486d-991f-b0cbf1f89406)  
-Luego reinicie el contenedor.
-El tamaño seguia siendo el mismo, luego de buscar encontre que el error se basaba en que el archivo con la configuración upload.ini no fue copiado correctamente, no se encuentra en el contenedor.
+### Posible error al configurar: 
+> [!CAUTION]
+> Al subir un archivo en el que el tamaño máximo es de 2MB,  
+> por lo tanto algo falló en la configuraciones del wordpress.  
+> Lo primero ha realizar fue verificar que la imagen se haya creado correctamente y que el contenedor haya levantado con wordpress-custom.  
+![Image](https://github.com/user-attachments/assets/42657d70-25b1-486d-991f-b0cbf1f89406)
+
+> [!CAUTION]
+> Luego se reinició el contenedor.  
+> El tamaño sigue siendo el mismo,
+> El error se basaba en que el archivo con la configuración upload.ini que no fue copiado correctamente,  
+> no se encuentra en el contenedor.
+
 ![Image](https://github.com/user-attachments/assets/c395f1cf-52e4-4a8f-ad27-9c710ef4a243)  
-El contenedor no estaba leyendo el archivo realizado anteriormente para tomar las configuraciones:
+> [!CAUTION]
+> El contenedor no estaba leyendo el archivo realizado anteriormente para tomar las configuraciones:
+
 ![Image](https://github.com/user-attachments/assets/86d26251-7e6e-4885-b2aa-519f15852ae7)  
 
-Solucion:
-Opte por cambiar el nombre del archivo a php con las mismas configuraciones, y en el Dockerfile personalizado realice los siguientes cambios:
+### Solucion:
+> [!TIP]
+> Se optó por cambiar el nombre del archivo a php con las mismas configuraciones, y en el Dockerfile personalizado.
+> Se realizaron los siguientes cambios:
 ```yaml
 FROM wordpress:latest
 
 COPY php.ini /usr/local/etc/php/php.ini
 ```
-Antes era COPY uploads.ini /usr/local/etc/php/upsloads  
+> [!IMPORTANT] 
+> Antes era COPY uploads.ini /usr/local/etc/php/upsloads  
+> [!NOTE] 
+> Reinicio de contenedor con las nuevas configuraciones.
 
-Luego reinicie el contenedor con las nuevas configuraciones. Funcionó correctamente:
 ![Image](https://github.com/user-attachments/assets/64482a11-78b2-47fe-8566-571395077e12)  
+> Funcionó correctamente.
 
-Explicación del problema: cuando se estaba usando el archivo uploads.ini dentro de /usr/local/etc/php/conf.d/, PHP no estaba leyendo ese archivo de configuración adicional. Por eso seguía usando los valores por defecto (como upload_max_filesize = 2M).
-Al copiar el archivo directamente como php.ini en /usr/local/etc/php/php.ini, que es el archivo principal de configuración de PHP, me aseguré que las configuraciones sean leídas sí o sí.
+### Explicación del problema: 
+> [!WARNING]  
+> Cuando se estaba usando el archivo uploads.ini dentro de /usr/local/etc/php/conf.d/,  
+> PHP no estaba leyendo ese archivo de configuración adicional.  
+> Por eso seguía usando los valores por defecto (como upload_max_filesize = 2M).  
+> Al copiar el archivo directamente como php.ini en /usr/local/etc/php/php.ini,  
+> que es el archivo principal de configuración de PHP, me aseguré que las configuraciones sean leídas sí o sí.
 
 ## Personalización de la imagen:
-Creo un Dockerfile que extiende la imagen oficial de WordPress para incluir el plugin Wordfence.
-Sirve para añadir seguridad contra malware, ataques y firewall. Aumenta la seguridad de Wordpress.
-Se crea una carpeta para el proyecto:  
+> [!NOTE] 
+> Se Crea un Dockerfile que extiende la imagen oficial de WordPress para incluir el plugin Wordfence.
+> Sirve para añadir seguridad contra malware, ataques y firewall. Aumenta la seguridad de Wordpress.
+> Se crea una carpeta para el proyecto:  
 ```yaml
 mkdir wp-custom
 ```
-Dentro de esa carpeta:
-Intenté de dos formas diferentes y ninguna me dejaba descomprimir luego el plugin, comandos intentados:
+> [!NOTE]  
+> Dentro de esa carpeta:
+> Se Intento de dos formas diferentes y ninguna dejaba descomprimir luego el plugin,  
+> comandos intentados:
 ```yaml
 wget https://downloads.wordpress.org/plugin/wordfence.latest-stable.zip
 curl -L -o wordfence.zip https://downloads.wordpress.org/plugin/wordfence.latest-stable.zip
 ```
-Por lo tanto opte por descargarlo manualmente desde el navegador.
-Luego de descargar el archivo, quedó en la carpeta de descargas, lo descomprimi en otra carpeta wp-custom1.
-Comando usado:  
+> [!TIP]
+> Se optó por descargarlo manualmente desde el navegador.
+> Luego de descargar el archivo, quedó en la carpeta de descargas, descomprimido en otra carpeta wp-custom1.
+> Comando utilizado:
+
 ![Image](https://github.com/user-attachments/assets/10567afd-794b-434f-85e0-bca46a4f5c22)  
-Creación del Dockerfile personalizado dentro de la carpeta:  
+> [!NOTE]  
+> Creación del Dockerfile personalizado dentro de la carpeta:  
 ```yaml
 FROM wordpress:latest
 
 COPY wordfence /usr/src/wordpress/wp-content/plugins/wordfence
 ```
-Esto copia el plugin en el lugar correcto para que Wordpress lo copie automaticamente al iniciar el contenedor.
-
-Cree la nueva imagen que voy a utilizar para levantar el contenedor Wordpress:
+> [!NOTE]  
+> Esto sitúa el plugin en el directorio correcto para que WordPress lo instale automáticamente al arrancar el contenedor.
+>   
+> Se Creo nueva imagen para levantar el contenedor Wordpress:
 ```yaml
 docker build -t wordpress-wordfence
 ```
-Pare y elimine el contenedor Wordpress creado anteriormente para poder correrlo con la nueva configuración, con el plugin:
+> [!IMPORTANT]  
+> Parar y eliminar el contenedor Wordpress creado anteriormente para poder correrlo con la nueva configuración, con el plugin:
+
 ![Image](https://github.com/user-attachments/assets/ede7b277-fe73-403e-9797-9dca58e1dc53)  
 
-En la siguiente imagen se ve que el plugin Wordfence Security puede activarse, ya aparece dentro de los plugins:
+> [!TIP]
+> En la siguiente imagen se ve que el plugin Wordfence Security puede activarse, ya aparece dentro de los plugins:
+
 ![Image](https://github.com/user-attachments/assets/bb9ba8a2-f6fd-41c8-b6d1-38bd61cdd7fd)  
-Y en la siguiente imagen se ve el plugin ya activado:
+> [!TIP]
+> Y en la siguiente imagen se ve el plugin ya activado:
+
 ![Image](https://github.com/user-attachments/assets/68755476-f2d7-40ad-9558-fde7b52386a3)  
 
 
