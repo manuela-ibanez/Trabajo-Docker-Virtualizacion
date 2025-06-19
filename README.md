@@ -60,7 +60,7 @@ Comenzar a correr el contenedor:
 ```bash
 docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manuela -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
-![alter name](D:\Imágenes\Capturas de pantalla\Captura de pantalla 2025-06-16 234627.png)
+![Image](https://github.com/user-attachments/assets/a7f58ff2-4cae-4c23-9289-c217f0a05a52)
 
 
 
