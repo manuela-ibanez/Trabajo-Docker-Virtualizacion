@@ -50,34 +50,42 @@ sudo docker pull mysql:8.0
 ```bash
 sudo docker run -d --name mysql_container  --network wordpress-net -e MYSQL_ROOT_PASSWORD=manu -e MYSQL_DATABASE=mi_base -e MYSQL_USER=manu -e MYSQL_PASSWORD=manu -v mysql-data:/var/lib/mysql -p 3306:3306 mysql:8.0
 ```
-Use las variables de entorno necesarias para su funcionamiento:  
-name:nombre del contenedor.  
-network: red para poder conectar luego wordpress y MySQL más rápidamente.  
--e: variables de entrono.  
--v: volumen donde va a almacenar los datos y los cambios realizados.  
+> [!WARNING]
+> Variables de entorno necesarias para su funcionamiento:  
+> name: nombre del contenedor.  
+> network: red para poder conectar luego wordpress y MySQL más rápidamente.  
+> -e: variables de entrono.  
+> -v: volumen donde va a almacenar los datos y los cambios realizados.  
 
 ## Despliegue de Wordpress:
-Cree un volumen para almacenar los datos de wordpress.
-Comando utilizado:
+> [!NOTE] 
+> Crear un volumen para almacenar los datos de wordpress.   
+>Comando utilizado:
 ```bash
 sudo docker volume create wp-content
 ```
-Descargue la imagen Wordpress para luego comenzar a correr el contenedor.
-Comando utilizado:
+> [!IMPORTANT]  
+> Descargar la imagen Wordpress para luego comenzar a correr el contenedor.  
+> Comando utilizado:
 ```bash
 docker pull wordpress:latest.
 ```
 >[!tip]
-Este paso no es estrictamente necesario, ya que, cuando se ejecuta el comando sudo docker run, Docker busca la imagen localmente y si no la encuentra la descarga automaticamente antes de correrlo, sin embargo queria incluirlo igualmente en la practica para tenerlo en cuenta.
-Comenzar a correr el contenedor:
+> Este paso no es estrictamente necesario, ya que, cuando se ejecuta el comando sudo docker run, Docker busca la imagen localmente y si no la encuentra la descarga automaticamente antes de correrlo, sin embargo queria incluirlo >
+> igualmente en la practica para tenerlo en cuenta.
+> Comenzar a correr el contenedor:
 ```bash
 docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manuela -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
-En la siguiente foto se pueden observar las imagenes creadas hasta el momento, donde estan Wordpress y MySQL:
-![Image](https://github.com/user-attachments/assets/a7f58ff2-4cae-4c23-9289-c217f0a05a52)
+> [!NOTE]
+>  Imagenes creadas hasta el momento:      
 
-Comence a correr el contenedor Wordpress.
-Con el siguiente comando:
+![Image](https://github.com/user-attachments/assets/a7f58ff2-4cae-4c23-9289-c217f0a05a52)
+> Aquí aparece Wordpress y MySQL
+
+> [!NOTE] 
+> Comence a correr el contenedor Wordpress.  
+> Con el siguiente comando:
 ```bash
 docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manu -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
