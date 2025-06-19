@@ -164,6 +164,50 @@ Luego reinicie el contenedor con las nuevas configuraciones. Funcionó correctam
 Explicación del problema: cuando se estaba usando el archivo uploads.ini dentro de /usr/local/etc/php/conf.d/, PHP no estaba leyendo ese archivo de configuración adicional. Por eso seguía usando los valores por defecto (como upload_max_filesize = 2M).
 Al copiar el archivo directamente como php.ini en /usr/local/etc/php/php.ini, que es el archivo principal de configuración de PHP, me aseguré que las configuraciones sean leídas sí o sí.
 
+## Personalización de la imagen:
+Creo un Dockerfile que extiende la imagen oficial de WordPress para incluir el plugin Wordfence.
+Sirve para añadir seguridad contra malware, ataques y firewall. Aumenta la seguridad de Wordpress.
+Se crea una carpeta para el proyecto:  
+```bash
+mkdir wp-custom
+```
+Dentro de esa carpeta:
+Intenté de dos formas diferentes y ninguna me dejaba descomprimir luego el plugin, comandos intentados:
+```bash
+wget https://downloads.wordpress.org/plugin/wordfence.latest-stable.zip
+curl -L -o wordfence.zip https://downloads.wordpress.org/plugin/wordfence.latest-stable.zip
+```
+Por lo tanto opte por descargarlo manualmente desde el navegador.
+Luego de descargar el archivo, quedó en la carpeta de descargas, lo descomprimi en otra carpeta wp-custom1.
+Comando usado:  
+![Image](https://github.com/user-attachments/assets/10567afd-794b-434f-85e0-bca46a4f5c22)  
+Creación del Dockerfile personalizado dentro de la carpeta:  
+```bash
+FROM wordpress:latest
+
+COPY wordfence /usr/src/wordpress/wp-content/plugins/wordfence
+```
+Esto copia el plugin en el lugar correcto para que Wordpress lo copie automaticamente al iniciar el contenedor.
+
+Cree la nueva imagen que voy a utilizar para levantar el contenedor Wordpress:
+```bash
+docker build -t wordpress-wordfence
+```
+Pare y elimine el contenedor Wordpress creado anteriormente para poder correrlo con la nueva configuración, con el plugin:
+![Image](https://github.com/user-attachments/assets/ede7b277-fe73-403e-9797-9dca58e1dc53)  
+
+En la siguiente imagen se ve que el plugin Wordfence Security puede activarse, ya aparece dentro de los plugins:
+![Image](https://github.com/user-attachments/assets/bb9ba8a2-f6fd-41c8-b6d1-38bd61cdd7fd)  
+Y en la siguiente imagen se ve el plugin ya activado:
+![Image](https://github.com/user-attachments/assets/68755476-f2d7-40ad-9558-fde7b52386a3)  
+
+
+
+
+
+
+
+
 
 
 
