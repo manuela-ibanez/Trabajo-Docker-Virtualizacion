@@ -54,6 +54,7 @@ Comando utilizado:
 ```bash
 docker pull wordpress:latest.
 ```
+>[!tip]
 Este paso no es estrictamente necesario, ya que, cuando se ejecuta el comando sudo docker run, Docker busca la imagen localmente y si no la encuentra la descarga automaticamente antes de correrlo, sin embargo queria incluirlo igualmente en la practica para tenerlo en cuenta.
 Comenzar a correr el contenedor:
 ```bash
