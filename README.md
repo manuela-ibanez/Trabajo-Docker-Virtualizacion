@@ -4,7 +4,7 @@
 - [Descripción del proyecto](#descripción-del-proyecto)
 - [Despliegue de la base de datos](#despliegue-de-la-base-de-datos)
 - [Despliegue de Wordpress](#despliegue-de-wordpress)
-- [Configuración adicional](#por-qué-nose-pueden-subir-archivos-grandes-a-wordpress-sin-una-previa-configuracion)
+- [Configuración adicional](#por-que-no-se-pueden-subir-archivos-grandes-a-wordpress-sin-una-previa-configuracion)
 - [Personalización de la imagen](#personalización-de-la-imagen)
 
 
