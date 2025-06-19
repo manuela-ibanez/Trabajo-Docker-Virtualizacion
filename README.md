@@ -95,7 +95,7 @@ docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_D
 
 ## Posible error
 > [!WARNING]   
-> Donde se pueden ver parametros muy similares es cuando se comeienza a correr el contenedor MySQL.  
+> Donde se pueden ver parametros muy similares es cuando se comienza a correr el contenedor MySQL.  
 > Al ir a buscar la pagina web donde esta corriendo Wordpress se dió el error de "Error establishing a database connection".  
 > Para solucionar el problema, se borraron ambos contenedores creados anteriormente y ambos volumenes.
 
