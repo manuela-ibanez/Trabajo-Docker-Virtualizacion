@@ -94,6 +94,95 @@ Al volver a entrar en la pagina se ve la persistencia de los datos modificados, 
 En la siguiente foto se puede ver el cambio realizado:  
 ![Image](https://github.com/user-attachments/assets/cb5328a7-0d97-4074-987e-4a545d9ca405)  
 
+## ¿Por qué no se pueden subir archivos grandes a Wordpress sin una previa configuracion?
+Debido a que la configuracion predeterminada de PHP y Apache, en la imagen de Wordpress, tiene límites bajos, lo recomendable es crear un Dockerfile personalizado que modifique estos parametros.  
+Para comenzar se debe crear un directorio:  
+```bash
+mkdir dockerfile
+```
+En este directorio vamos a añadir nuestro Dockerfile personalizado, que es un archivo de instricciones para construir una imagen de Docker.
+Dockerfile personalizado:  
+```bash
+nano Dockerfile
+```
+Y dentro del Dockerfile:  
+```bash
+FROM wordpress:latest
+
+COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+```
+COPY toma el archivo uploads.ini (que define los nuevos límites para que WordPress permite subir archivos grandes), que se añade al directorio. y busca configuraciones extra.  
+Uploads.ini:  
+![Image](https://github.com/user-attachments/assets/7f074bc1-6bcf-401d-9c44-966464c32ab3)
+Explicación de los parametros dentro del Uploads.ini, que es el archivo que define los nuevos limites para el contenedor:
+file_uploads = On -> Habilita la subida de archivos por formularios HTML (si está en Off, no podés subir nada).  
+memory_limit = 512M -> Cantidad máxima de memoria RAM que puede usar un script PHP (como los de WordPress).
+upload_max_filesize = 512M -> Tamaño máximo de archivo individual que podés subir (por ejemplo, una imagen, PDF o video).
+post_max_size = 512M -> Tamaño máximo total de los datos que puede recibir un formulario POST (por ejemplo, cuando subís varios archivos juntos).
+max_execution_time = 300 -> Tiempo máximo (en segundos) que se permite a un script PHP para ejecutarse. Si tarda más, se corta.
+
+Ahora se le indica a Docker que construya una imagen usando el archivo Dockerfile realizado anteriormente, wordpress-custom es el nombre de la nueva imagen creada.
+Comando utilizado:  
+```bash
+docker build -t wordpress-custom .
+```
+![Image](https://github.com/user-attachments/assets/2a679176-3833-493d-a24f-59c6bbeb2373)  
+
+Se debe detener y eliminar el contenedor antigup de Wordpress, para levantar uno nuevo con las imagen creada anteriormente, que contiene las nuevas configuraciones.
+Comandos usados:  
+```bash
+docker stop wordpress_container
+docker rm wordpress_container
+```
+Se debe levantar un contenedor con la imagen creada anteriormente, cuyo nombre es wordpress-custom:
+Comandos usados:  
+![Image](https://github.com/user-attachments/assets/4b75ec73-dada-4f30-a4b8-d3738b4cc80e)  
+Se usa la imagen personalizada anteriormente en vez de wordpress:latest, como se ve en la imagen.
+
+Ocurrió un error en lo anterior:
+Al subir un archivo me dice que el tamaño máximo es de 2MB, por lo tanto algo falló en la configuraciones del wordpress.
+Lo primero que realice fue verificar que la imagen se haya creado correctamente y que el contenedor haya levantado con wordpress-custom.
+![Image](https://github.com/user-attachments/assets/42657d70-25b1-486d-991f-b0cbf1f89406)  
+Luego reinicie el contenedor.
+El tamaño seguia siendo el mismo, luego de buscar encontre que el error se basaba en que el archivo con la configuración upload.ini no fue copiado correctamente, no se encuentra en el contenedor.
+![Image](https://github.com/user-attachments/assets/c395f1cf-52e4-4a8f-ad27-9c710ef4a243)  
+El contenedor no estaba leyendo el archivo realizado anteriormente para tomar las configuraciones:
+![Image](https://github.com/user-attachments/assets/86d26251-7e6e-4885-b2aa-519f15852ae7)  
+
+Solucion:
+Opte por cambiar el nombre del archivo a php con las mismas configuraciones, y en el Dockerfile personalizado realice los siguientes cambios:
+```bash
+FROM wordpress:latest
+
+COPY php.ini /usr/local/etc/php/php.ini
+```
+Antes era COPY uploads.ini /usr/local/etc/php/upsloads  
+
+Luego reinicie el contenedor con las nuevas configuraciones. Funcionó correctamente:
+![Image](https://github.com/user-attachments/assets/64482a11-78b2-47fe-8566-571395077e12)  
+
+Explicación del problema: cuando se estaba usando el archivo uploads.ini dentro de /usr/local/etc/php/conf.d/, PHP no estaba leyendo ese archivo de configuración adicional. Por eso seguía usando los valores por defecto (como upload_max_filesize = 2M).
+Al copiar el archivo directamente como php.ini en /usr/local/etc/php/php.ini, que es el archivo principal de configuración de PHP, me aseguré que las configuraciones sean leídas sí o sí.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
