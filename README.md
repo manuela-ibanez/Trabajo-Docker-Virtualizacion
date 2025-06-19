@@ -11,10 +11,16 @@
 
 ## Descripción del proyecto:
 
-Este proyecto despliega una aplicación compuesta por multiples contenedores, estos son un sitio Wordpress y una base de datos, en mi caso utilice MySQL, utilizando Docker.
-- Autor: Manuela Ibañez
-- Sistema opertivo usado: Ubuntu 24.04.2 LTS.
-- Entorno: Virtualbox.
+El objetivo del proyecto es el despliegue una aplicación compuesta por multiples contenedores, tal como un sitio Wordpress y una base de datos // en mi caso utilice MySQL, utilizando Docker.
+- Autor: Manuela Ibañez 
+- SO: 24.04.2 LTS  
+![ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
+- Entorno:  
+![virtualbox](https://img.shields.io/badge/VirtualBox-21416b?style=for-the-badge&logo=VirtualBox&logoColor=white)
+- BBDD:    
+![mysql](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
+- Utils:  
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Despliegue de la base de datos:
 Utilice MySQL.
@@ -202,6 +208,9 @@ Y en la siguiente imagen se ve el plugin ya activado:
 ![Image](https://github.com/user-attachments/assets/68755476-f2d7-40ad-9558-fde7b52386a3)  
 
 
+### Contacto:  
+![gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)  
+mibaniez@alumnos.exa.unicen.edu.ar
 
 
 
