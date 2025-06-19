@@ -153,7 +153,7 @@ FROM wordpress:latest
 COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 ```
 > [!TIP]
-> COPY toma el archivo uploads.ini (que define los nuevos límites para que WordPress permite subir archivos grandes), que se añade al directorio. y busca configuraciones extra.  
+> COPY toma el archivo uploads.ini (que define los nuevos límites para que WordPress permita subir archivos grandes), que se añade al directorio y busca configuraciones extra.  
 
 > [!NOTE] 
 > Uploads.ini:
