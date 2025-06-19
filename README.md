@@ -27,7 +27,7 @@ El objetivo del proyecto es el despliegue una aplicación compuesta por multiple
 > [!NOTE] 
 > Lo primero ha realizar es una red docker para facilitar la comunicación entre wordpress y MySQL.  
 Comando utilizado: 
-```bash
+```yaml
 sudo docker network create wordpress-net
 ```
 > [!CAUTION]
@@ -36,18 +36,18 @@ sudo docker network create wordpress-net
 > [!NOTE] 
 > Luego se creea un volumen para almacenar los datos del contenedor y asegurar la persistencia de los datos.  
 > Comando utilizado:
-```bash
+```yaml
 sudo docker volume create mysql-data
 ```
 > [!IMPORTANT]
 > Para comenzar a descargar MySQL se descarga la respectiva imagen.  
 > Comando utilizado:
-```bash
+```yaml
 sudo docker pull mysql:8.0
 ```
 > [!TIP]
 > Comenzar a correr el contenedor:
-```bash
+```yaml
 sudo docker run -d --name mysql_container  --network wordpress-net -e MYSQL_ROOT_PASSWORD=manu -e MYSQL_DATABASE=mi_base -e MYSQL_USER=manu -e MYSQL_PASSWORD=manu -v mysql-data:/var/lib/mysql -p 3306:3306 mysql:8.0
 ```
 > [!WARNING]
@@ -61,20 +61,20 @@ sudo docker run -d --name mysql_container  --network wordpress-net -e MYSQL_ROOT
 > [!NOTE] 
 > Crear un volumen para almacenar los datos de wordpress.   
 >Comando utilizado:
-```bash
+```yaml
 sudo docker volume create wp-content
 ```
 > [!IMPORTANT]  
 > Descargar la imagen Wordpress para luego comenzar a correr el contenedor.  
 > Comando utilizado:
-```bash
+```yaml
 docker pull wordpress:latest.
 ```
 >[!tip]
 > Este paso no es estrictamente necesario, ya que, cuando se ejecuta el comando sudo docker run, Docker busca la imagen localmente y si no la encuentra la descarga automaticamente antes de correrlo, sin embargo queria incluirlo >
 > igualmente en la practica para tenerlo en cuenta.
 > Comenzar a correr el contenedor:
-```bash
+```yaml
 docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manuela -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
 > [!NOTE]
@@ -86,7 +86,7 @@ docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_D
 > [!NOTE] 
 > Comenzar a correr el contenedor Wordpress.  
 > Con el siguiente comando:
-```bash
+```yaml
 docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manu -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
 
@@ -94,7 +94,7 @@ Donde se pueden ver parametros muy similares a cuando comence a correr el conten
 Al ir a buscar la pagina web donde esta corriendo Wordpress me daba error de "Error establishing a database connection".
 Para solucionar el problema, borre ambos contenedores creados anteriormente y ambos volumenes.
 Para borrar los contenedores utilice:
-```bash
+```yaml
 Docker stop wordpress_container
 Docker rm wordpress_container
 Docker stop mysql_container
@@ -118,16 +118,16 @@ En la siguiente foto se puede ver el cambio realizado:
 ## Por qué no se pueden subir archivos grandes a Wordpress sin una previa configuración
 Debido a que la configuracion predeterminada de PHP y Apache, en la imagen de Wordpress, tiene límites bajos, lo recomendable es crear un Dockerfile personalizado que modifique estos parametros.  
 Para comenzar se debe crear un directorio:  
-```bash
+```yaml
 mkdir dockerfile
 ```
 En este directorio vamos a añadir nuestro Dockerfile personalizado, que es un archivo de instricciones para construir una imagen de Docker.
 Dockerfile personalizado:  
-```bash
+```yaml
 nano Dockerfile
 ```
 Y dentro del Dockerfile:  
-```bash
+```yaml
 FROM wordpress:latest
 
 COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
@@ -144,14 +144,14 @@ max_execution_time = 300 -> Tiempo máximo (en segundos) que se permite a un scr
 
 Ahora se le indica a Docker que construya una imagen usando el archivo Dockerfile realizado anteriormente, wordpress-custom es el nombre de la nueva imagen creada.
 Comando utilizado:  
-```bash
+```yaml
 docker build -t wordpress-custom .
 ```
 ![Image](https://github.com/user-attachments/assets/2a679176-3833-493d-a24f-59c6bbeb2373)  
 
 Se debe detener y eliminar el contenedor antigup de Wordpress, para levantar uno nuevo con las imagen creada anteriormente, que contiene las nuevas configuraciones.
 Comandos usados:  
-```bash
+```yaml
 docker stop wordpress_container
 docker rm wordpress_container
 ```
@@ -172,7 +172,7 @@ El contenedor no estaba leyendo el archivo realizado anteriormente para tomar la
 
 Solucion:
 Opte por cambiar el nombre del archivo a php con las mismas configuraciones, y en el Dockerfile personalizado realice los siguientes cambios:
-```bash
+```yaml
 FROM wordpress:latest
 
 COPY php.ini /usr/local/etc/php/php.ini
@@ -189,12 +189,12 @@ Al copiar el archivo directamente como php.ini en /usr/local/etc/php/php.ini, qu
 Creo un Dockerfile que extiende la imagen oficial de WordPress para incluir el plugin Wordfence.
 Sirve para añadir seguridad contra malware, ataques y firewall. Aumenta la seguridad de Wordpress.
 Se crea una carpeta para el proyecto:  
-```bash
+```yaml
 mkdir wp-custom
 ```
 Dentro de esa carpeta:
 Intenté de dos formas diferentes y ninguna me dejaba descomprimir luego el plugin, comandos intentados:
-```bash
+```yaml
 wget https://downloads.wordpress.org/plugin/wordfence.latest-stable.zip
 curl -L -o wordfence.zip https://downloads.wordpress.org/plugin/wordfence.latest-stable.zip
 ```
@@ -203,7 +203,7 @@ Luego de descargar el archivo, quedó en la carpeta de descargas, lo descomprimi
 Comando usado:  
 ![Image](https://github.com/user-attachments/assets/10567afd-794b-434f-85e0-bca46a4f5c22)  
 Creación del Dockerfile personalizado dentro de la carpeta:  
-```bash
+```yaml
 FROM wordpress:latest
 
 COPY wordfence /usr/src/wordpress/wp-content/plugins/wordfence
@@ -211,7 +211,7 @@ COPY wordfence /usr/src/wordpress/wp-content/plugins/wordfence
 Esto copia el plugin en el lugar correcto para que Wordpress lo copie automaticamente al iniciar el contenedor.
 
 Cree la nueva imagen que voy a utilizar para levantar el contenedor Wordpress:
-```bash
+```yaml
 docker build -t wordpress-wordfence
 ```
 Pare y elimine el contenedor Wordpress creado anteriormente para poder correrlo con la nueva configuración, con el plugin:
