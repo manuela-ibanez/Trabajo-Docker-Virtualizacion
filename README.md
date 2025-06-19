@@ -84,7 +84,7 @@ docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_D
 > Aquí aparece Wordpress y MySQL
 
 > [!NOTE] 
-> Comence a correr el contenedor Wordpress.  
+> Comenzar a correr el contenedor Wordpress.  
 > Con el siguiente comando:
 ```bash
 docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manu -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
