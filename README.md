@@ -139,9 +139,9 @@ Comandos usados:
 ![Image](https://github.com/user-attachments/assets/4b75ec73-dada-4f30-a4b8-d3738b4cc80e)  
 Se usa la imagen personalizada anteriormente en vez de wordpress:latest, como se ve en la imagen.
 
-Ocurrió un error en lo anterior:
-Al subir un archivo me dice que el tamaño máximo es de 2MB, por lo tanto algo falló en la configuraciones del wordpress.
-Lo primero que realice fue verificar que la imagen se haya creado correctamente y que el contenedor haya levantado con wordpress-custom.
+Ocurrió un error en lo anterior:  
+Al subir un archivo me dice que el tamaño máximo es de 2MB, por lo tanto algo falló en la configuraciones del wordpress.  
+Lo primero que realice fue verificar que la imagen se haya creado correctamente y que el contenedor haya levantado con wordpress-custom.  
 ![Image](https://github.com/user-attachments/assets/42657d70-25b1-486d-991f-b0cbf1f89406)  
 Luego reinicie el contenedor.
 El tamaño seguia siendo el mismo, luego de buscar encontre que el error se basaba en que el archivo con la configuración upload.ini no fue copiado correctamente, no se encuentra en el contenedor.
