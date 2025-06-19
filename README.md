@@ -48,7 +48,7 @@ sudo docker pull mysql:8.0
 > [!TIP]
 > Comenzar a correr el contenedor:
 ```yaml
-sudo docker run -d --name mysql_container  --network wordpress-net -e MYSQL_ROOT_PASSWORD=manu -e MYSQL_DATABASE=mi_base -e MYSQL_USER=manu -e MYSQL_PASSWORD=manu -v mysql-data:/var/lib/mysql -p 3306:3306 mysql:8.0
+sudo docker run -d --name mysql_container  --network wordpress-net -e MYSQL_ROOT_PASSWORD=contraseña -e MYSQL_DATABASE=mi_base -e MYSQL_USER=manu -e MYSQL_PASSWORD=contraseña -v mysql-data:/var/lib/mysql -p 3306:3306 mysql:8.0
 ```
 > [!WARNING]
 > Variables de entorno necesarias para su funcionamiento:  
@@ -75,7 +75,7 @@ docker pull wordpress:latest.
 > igualmente en la practica para tenerlo en cuenta.
 > Comenzar a correr el contenedor:
 ```yaml
-docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manuela -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
+docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manuela -e WORDPRESS_DB_PASSWORD=contraseña -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
 > [!NOTE]
 >  Imagenes creadas hasta el momento:      
@@ -87,7 +87,7 @@ docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_D
 > Comenzar a correr el contenedor Wordpress.  
 > Con el siguiente comando:
 ```yaml
-docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manu -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
+docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manu -e WORDPRESS_DB_PASSWORD=contraseña -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
 
 ## Posible error
