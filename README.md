@@ -222,7 +222,7 @@ FROM wordpress:latest
 COPY php.ini /usr/local/etc/php/php.ini
 ```
 > [!IMPORTANT] 
-> Antes era COPY uploads.ini /usr/local/etc/php/upsloads
+> Antes era COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
 > [!NOTE] 
 > Reinicio de contenedor con las nuevas configuraciones.
