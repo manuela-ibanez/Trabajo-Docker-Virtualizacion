@@ -11,7 +11,7 @@
 
 ## Descripción del proyecto:
 
-El objetivo del proyecto es el despliegue una aplicación compuesta por multiples contenedores, tal como un sitio Wordpress y una base de datos // en mi caso utilice MySQL, utilizando Docker.
+El objetivo del proyecto es el despliegue una aplicación compuesta por multiples contenedores, tal como un sitio Wordpress y una base de datos
 - Autor: Manuela Ibañez 
 - SO: 24.04.2 LTS  
 ![ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
@@ -21,25 +21,32 @@ El objetivo del proyecto es el despliegue una aplicación compuesta por multiple
 ![mysql](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 - Utils:  
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![WordPress](https://img.shields.io/badge/WordPress-%23117AC9.svg?style=for-the-badge&logo=WordPress&logoColor=white)
 
 ## Despliegue de la base de datos:
-Utilice MySQL.
-Lo primero que realice fue una red docker para facilitar la comunicación entre wordpress y MySQL.
-Comando utilizado: (wordpress-net es el nombre de la red).
+> [!NOTE] 
+> Lo primero ha realizar es una red docker para facilitar la comunicación entre wordpress y MySQL.  
+Comando utilizado: 
 ```bash
 sudo docker network create wordpress-net
 ```
-Luego cree un volumen para almacenar los datos del contenedor y asegurar la persistencia de los datos.
-Comando utilizado:
+> [!CAUTION]
+> (wordpress-net es el nombre de la red).
+
+> [!NOTE] 
+> Luego se creea un volumen para almacenar los datos del contenedor y asegurar la persistencia de los datos.  
+> Comando utilizado:
 ```bash
 sudo docker volume create mysql-data
 ```
-Para comenzar a descargar MySQL descargue la respectiva imagen.
-Comando utilizado:
+> [!IMPORTANT]
+> Para comenzar a descargar MySQL se descarga la respectiva imagen.  
+> Comando utilizado:
 ```bash
 sudo docker pull mysql:8.0
 ```
-Comence a correr el contenedor:
+> [!TIP]
+> Comenzar a correr el contenedor:
 ```bash
 sudo docker run -d --name mysql_container  --network wordpress-net -e MYSQL_ROOT_PASSWORD=manu -e MYSQL_DATABASE=mi_base -e MYSQL_USER=manu -e MYSQL_PASSWORD=manu -v mysql-data:/var/lib/mysql -p 3306:3306 mysql:8.0
 ```
