@@ -90,75 +90,105 @@ docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_D
 docker run -d --name wordpress_container --network wordpress-net  -e WORDPRESS_DB_HOST=mysql-container:3306 -e WORDPRESS_DB_NAME=mi_base -e WORDPRESS_DB_USER=manu -e WORDPRESS_DB_PASSWORD=manu -v wp-content:/var/www/html/wp-content -p 8080:80 wordpress:latest
 ```
 
-Donde se pueden ver parametros muy similares a cuando comence a correr el contenedor MySQL.
-Al ir a buscar la pagina web donde esta corriendo Wordpress me daba error de "Error establishing a database connection".
-Para solucionar el problema, borre ambos contenedores creados anteriormente y ambos volumenes.
-Para borrar los contenedores utilice:
+## Posible error
+> [!WARNING]   
+> Donde se pueden ver parametros muy similares es cuando se comeienza a correr el contenedor MySQL.  
+> Al ir a buscar la pagina web donde esta corriendo Wordpress se dió el error de "Error establishing a database connection".  
+> Para solucionar el problema, se borraron ambos contenedores creados anteriormente y ambos volumenes.
+
+> [!TIP]
+> Comando utilizado para borrar los contenedores:  
 ```yaml
 Docker stop wordpress_container
 Docker rm wordpress_container
 Docker stop mysql_container
 Docker rm mysql_container
 ```
-Y para volver a correrlos:  
+
+> [!TIP]
+> Volver a correrlos:
+
 ![Image](https://github.com/user-attachments/assets/0f95d22f-18f7-4e6b-858d-21c3487d70e7)  
 ![Image](https://github.com/user-attachments/assets/23dbd0e9-09b9-40b5-bdd7-2a0510453be2)  
-Luego de la corrección de errores en ambos codigos comenzó a andar correctamente la pagina web.
-En la siguiente imagen se muestra como se veia la pagina ni bien inició luego de solucionar los errores:
-![Image](https://github.com/user-attachments/assets/8eff947b-e35d-429c-af78-4e84b4ee47ed)  
+> [!NOTE]  
+> Luego de esta corrección de errores en ambos codigos, la pagina web funciona correctamente:
 
-Para comprobar persistencia se realiza un cambio en la página de inicio con las opciones a la derecha, en entradas. 
-Cambio realizado: se cambió ¡Hola mundo! por ¡Trabajo docker manu!.  
-Se reinician los contenedores para comprobar que ese cambio se guarde correctamente:  
+![Image](https://github.com/user-attachments/assets/8eff947b-e35d-429c-af78-4e84b4ee47ed)
+> En la imagen se muestra como se ve la pagina luego de solucionar los errores:
+
+### Comprobar persistencia
+> [!NOTE]  
+> Se realiza un cambio en la página de inicio con las opciones a la derecha, en entradas.  
+> Cambio realizado: se cambió ¡Hola mundo! por ¡Trabajo docker manu!.  
+> Se reinician los contenedores para comprobar que ese cambio se guarde correctamente:  
+
 ![Image](https://github.com/user-attachments/assets/0b7d3dd3-450c-41cd-b099-f020c8893663)  
-Al volver a entrar en la pagina se ve la persistencia de los datos modificados, lo que indica la correcta configuración de los volumenes.
-En la siguiente foto se puede ver el cambio realizado:  
+> [!NOTE]  
+> Al volver a entrar en la pagina se ve la persistencia de los datos modificados, lo que indica la correcta configuración de los volumenes.  
+
 ![Image](https://github.com/user-attachments/assets/cb5328a7-0d97-4074-987e-4a545d9ca405)  
+> En la imagen se puede ver el cambio realizado  
 
 ## Por qué no se pueden subir archivos grandes a Wordpress sin una previa configuración
-Debido a que la configuracion predeterminada de PHP y Apache, en la imagen de Wordpress, tiene límites bajos, lo recomendable es crear un Dockerfile personalizado que modifique estos parametros.  
-Para comenzar se debe crear un directorio:  
+> [!CAUTION]
+> Debido a que la configuracion predeterminada de PHP y Apache, en la imagen de Wordpress, tiene límites bajos, lo recomendable es crear un Dockerfile personalizado que modifique estos parametros.  
+> Para comenzar se debe crear un directorio:  
 ```yaml
 mkdir dockerfile
 ```
-En este directorio vamos a añadir nuestro Dockerfile personalizado, que es un archivo de instricciones para construir una imagen de Docker.
-Dockerfile personalizado:  
+> [!IMPORTANT]
+> En este directorio vamos a añadir nuestro Dockerfile personalizado, que es un archivo de instricciones para construir una imagen de Docker.  
+> Dockerfile personalizado:  
 ```yaml
 nano Dockerfile
 ```
-Y dentro del Dockerfile:  
+> [!IMPORTANT]
+> Y dentro del Dockerfile:  
 ```yaml
 FROM wordpress:latest
 
 COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 ```
-COPY toma el archivo uploads.ini (que define los nuevos límites para que WordPress permite subir archivos grandes), que se añade al directorio. y busca configuraciones extra.  
-Uploads.ini:  
-![Image](https://github.com/user-attachments/assets/7f074bc1-6bcf-401d-9c44-966464c32ab3)
-Explicación de los parametros dentro del Uploads.ini, que es el archivo que define los nuevos limites para el contenedor:
-file_uploads = On -> Habilita la subida de archivos por formularios HTML (si está en Off, no podés subir nada).  
-memory_limit = 512M -> Cantidad máxima de memoria RAM que puede usar un script PHP (como los de WordPress).
-upload_max_filesize = 512M -> Tamaño máximo de archivo individual que podés subir (por ejemplo, una imagen, PDF o video).
-post_max_size = 512M -> Tamaño máximo total de los datos que puede recibir un formulario POST (por ejemplo, cuando subís varios archivos juntos).
-max_execution_time = 300 -> Tiempo máximo (en segundos) que se permite a un script PHP para ejecutarse. Si tarda más, se corta.
+> [!TIP]
+> COPY toma el archivo uploads.ini (que define los nuevos límites para que WordPress permite subir archivos grandes), que se añade al directorio. y busca configuraciones extra.  
 
-Ahora se le indica a Docker que construya una imagen usando el archivo Dockerfile realizado anteriormente, wordpress-custom es el nombre de la nueva imagen creada.
-Comando utilizado:  
+> [!NOTE] 
+> Uploads.ini:
+   
+![Image](https://github.com/user-attachments/assets/7f074bc1-6bcf-401d-9c44-966464c32ab3)
+
+### Parametros dentro del Uploads.ini
+> [!IMPORTANT]
+> Explicación de los parametros dentro del Uploads.ini, que es el archivo que define los nuevos limites para el contenedor:  
+> file_uploads = On -> Habilita la subida de archivos por formularios HTML (si está en Off, no podés subir nada).   
+>memory_limit = 512M -> Cantidad máxima de memoria RAM que puede usar un script PHP (como los de WordPress).  
+> upload_max_filesize = 512M -> Tamaño máximo de archivo individual que podés subir (por ejemplo, una imagen, PDF o video).  
+> post_max_size = 512M -> Tamaño máximo total de los datos que puede recibir un formulario POST (por ejemplo, cuando subís varios archivos juntos).  
+> max_execution_time = 300 -> Tiempo máximo (en segundos) que se permite a un script PHP para ejecutarse. Si tarda más, se corta.  
+
+> [!NOTE]  
+> Ahora se le indica a Docker que construya una imagen usando el archivo Dockerfile realizado anteriormente,  
+> wordpress-custom es el nombre de la nueva imagen creada.  
+> Comando utilizado:  
 ```yaml
 docker build -t wordpress-custom .
 ```
 ![Image](https://github.com/user-attachments/assets/2a679176-3833-493d-a24f-59c6bbeb2373)  
 
-Se debe detener y eliminar el contenedor antigup de Wordpress, para levantar uno nuevo con las imagen creada anteriormente, que contiene las nuevas configuraciones.
-Comandos usados:  
+> [!WARNING]
+> Se debe detener y eliminar el contenedor antiguo de Wordpress, para levantar uno nuevo con las imagen creada anteriormente, que contiene las nuevas configuraciones.  
+> Comandos usados:  
 ```yaml
 docker stop wordpress_container
 docker rm wordpress_container
 ```
-Se debe levantar un contenedor con la imagen creada anteriormente, cuyo nombre es wordpress-custom:
-Comandos usados:  
+> [!WARNING]
+> Se debe levantar un contenedor con la imagen creada anteriormente,
+> cuyo nombre es wordpress-custom.    
+> Comandos usados:
+
 ![Image](https://github.com/user-attachments/assets/4b75ec73-dada-4f30-a4b8-d3738b4cc80e)  
-Se usa la imagen personalizada anteriormente en vez de wordpress:latest, como se ve en la imagen.
+> Se usa la imagen personalizada anteriormente en vez de wordpress:latest, como se ve en la imagen.
 
 Ocurrió un error en lo anterior:  
 Al subir un archivo me dice que el tamaño máximo es de 2MB, por lo tanto algo falló en la configuraciones del wordpress.  
