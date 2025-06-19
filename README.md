@@ -140,7 +140,7 @@ Docker rm mysql_container
 mkdir dockerfile
 ```
 > [!IMPORTANT]
-> En este directorio vamos a añadir nuestro Dockerfile personalizado, que es un archivo de instricciones para construir una imagen de Docker.  
+> En este directorio vamos a añadir nuestro Dockerfile personalizado, que es un archivo de instrucciones para construir una imagen de Docker.  
 > Dockerfile personalizado:  
 ```yaml
 nano Dockerfile
