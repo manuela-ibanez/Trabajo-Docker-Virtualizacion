@@ -4,7 +4,7 @@
 - [Descripción del proyecto](#descripción-del-proyecto)
 - [Despliegue de la base de datos](#despliegue-de-la-base-de-datos)
 - [Despliegue de Wordpress](#despliegue-de-wordpress)
-- [Configuración adicional](#por-que-no-se-pueden-subir-archivos-grandes-a-wordpress-sin-una-previa-configuracion)
+- [Configuración adicional](#por-qué-no-se-pueden-subir-archivos-grandes-a-wordpress-sin-una-previa-configuración)
 - [Personalización de la imagen](#personalización-de-la-imagen)
 
 
@@ -94,7 +94,7 @@ Al volver a entrar en la pagina se ve la persistencia de los datos modificados, 
 En la siguiente foto se puede ver el cambio realizado:  
 ![Image](https://github.com/user-attachments/assets/cb5328a7-0d97-4074-987e-4a545d9ca405)  
 
-## Por qué no se pueden subir archivos grandes a Wordpress sin una previa configuracion
+## Por qué no se pueden subir archivos grandes a Wordpress sin una previa configuración
 Debido a que la configuracion predeterminada de PHP y Apache, en la imagen de Wordpress, tiene límites bajos, lo recomendable es crear un Dockerfile personalizado que modifique estos parametros.  
 Para comenzar se debe crear un directorio:  
 ```bash
